@@ -12,6 +12,7 @@ convert
 use dbmhsiswa;
 select * from tbmhs;
 
+select datepart(week, tgl_lahir), datepart(weekday, tgl_lahir) from tbmhs;
 
 
 
