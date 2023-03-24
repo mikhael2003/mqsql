@@ -24,8 +24,10 @@ select dateadd(month,1,'05/26/2003');
 select datepart(week, '05/26/2003')
 select datename(dw, '05/26/2003') as hariini	
 
+select datediff(day, '2023-05-07', '2023-06-08')
 
-
+select convert(date, '2023-09-20')
+select convert(datetime, '2023-09-20')
 
 
 
