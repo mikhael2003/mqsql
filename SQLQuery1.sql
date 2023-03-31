@@ -86,3 +86,7 @@ when substring(Kode_Paket,5,1)='A' then dateadd(month,2, tgl_masuk)
 when substring(Kode_Paket,5,1)='B' then dateadd(month,2, tgl_masuk)
 when substring(Kode_Paket,5,1)='C' then dateadd(month,1, tgl_masuk)
 end
+
+______________________________________________________________________________________________________________________________________
+
+
