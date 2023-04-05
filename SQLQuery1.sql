@@ -131,3 +131,36 @@ where penjualan.idpenjual=barang.id_jual
 	
 select *from vtransaksi
 
+
+________________________________________________________________________________________
+
+use finansial
+select * from pelanggan
+
+create table bayar(kd_bayar char(5) primary key, tgl_bayar date, nomor varchar(6), j_angsuran int, bunga int)
+alter table bayar alter column nomor varchar(6)  foreign key references pelanggan(
+select * from bayar
+
+alter table pelanggan alter column nokontrak varchar(6) not null
+alter table pelanggan add primary key (nokontrak)
+alter table bayar add foreign key (nomor) references pelanggan(nokontrak)
+create table bayar(kd_bayar char(5) primary key,tgl_bayar date, nomor varchar(6), j_angsuran int, bunga int)
+
+insert into bayar values('B0001','09/13/2022','0003',250000,15000)
+insert into bayar values('B0002','04/14/2022','0002',210000,12000)
+insert into bayar values('B0003','08/15/2022','0001',215000,10000)
+insert into bayar values('B0004','07/16/2022','0004',125000,13500)
+
+create view vdaftar as select bayar.kd_bayar, pelanggan.nama, bayar.tgl_bayar
+, bayar.j_angsuran from bayar,pelanggan where bayar.nomor = pelanggan.nokontrak
+
+select * from vdaftar
+
+create view view2 as select nama,hutang, case jkelamin when 'L' then 'Laki-Laki'
+when 'P' then 'Perempuan' end as Jenis from pelanggan
+select * from view2
+
+create view vdaftar1 as select bayar.kd_bayar, pelanggan.nama, bayar.tgl_bayar
+, bayar.j_angsuran, pelanggan.hutang-bayar.j_angsuran as sisahutang from bayar,pelanggan where bayar.nomor = pelanggan.nokontrak
+select * from vdaftar1
+
