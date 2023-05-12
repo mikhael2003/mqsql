@@ -222,5 +222,78 @@ INNER JOIN tb_album as a on a.kd_album = p.kd_album
 
 INNER JOIN tb_lagu as l on l.kd_lagu = p.kd_lagu
 
+____________________________________________________________________________________________________________________________________________________________
+
+create database dbobat
+
+use dbobat
+
+select * from tb_pembeli
+
+select * from tb_obat
+
+select * from tb_karyawan
+
+create table tb_pembeli(no_nota varchar(8) primary key not null, nama varchar(25) null, total int) 
+
+create table tb_obat(kode_obat varchar(8) primary key not null, nama_obat varchar(25) not null, jenis varchar(8) not null,keluhan varchar(30) not null)
+
+create table tb_karyawan(nik varchar(8) primary key not null, nama varchar(25) not null, alamat varchar(40) not null, bagian varchar(15) null)
+
+
+create table tb_banyak(no_nota varchar(8) foreign key references tb_pembeli(no_nota) not null, kode_obat varchar(8) foreign key references tb_obat(kode_obat) not null, banyak int not null, sub_total int)
+
+create table tb_login(nik varchar(8) foreign key references tb_karyawan(nik) not null, username varchar(20)  primary key not null, passwordd varchar(20) not null)
+
+create table tb_stok(kode_obat varchar(8) foreign key references tb_obat(kode_obat) not null, stok int not null, harga int not null) 
+
+//tb_pembeli
+insert into tb_pembeli values ('A001', 'Mikhael', '')
+insert into tb_pembeli values ('A002', 'Fawzan', '')
+insert into tb_pembeli values ('A003', 'Bebin', '')
+
+//tb_obat
+insert into tb_obat values('B001', 'paramex', 'pusing', 'pusing')
+insert into tb_obat values('B002', 'woods', 'batuk', 'batuk')
+insert into tb_obat values('B003', 'paracetamol', 'demam', 'demam')
+
+//tb_karyawan
+insert into tb_karyawan values('C001', 'dinda', 'MDP01', 'admind')
+insert into tb_karyawan values('C002', 'putri', 'MDP02', 'gudang01')
+insert into tb_karyawan values('C003', 'nur', 'MDP03', 'gudang02')
+
+
+//tb_banyak
+insert into tb_banyak values('A001', 'B001', '50', '60')
+insert into tb_banyak values('A002', 'B002', '60', '70')
+insert into tb_banyak values('A003', 'B003', '70', '80')
+
+//tb_login
+insert into tb_login values('C001', 'mikhael', 'mikhael01')
+insert into tb_login values('C002', 'fawzan', 'fawzan02')
+insert into tb_login values('C003', 'dinda', 'dinda03')
+
+//tb_stok
+insert into tb_stok values('B001', '50', '2000')
+insert into tb_stok values('B002', '50', '10000')
+insert into tb_stok values('B003', '50', '4000')
+
+//3
+select jenis from tb_obat
+
+//4
+select * from tb_obat where keluhan = 'pusing'
+
+//5
+select kode_obat from tb_banyak sum banyak 
+
+//6
+select from
+
+//7 
+select from
+
+
+
 order by streaming_view desc
 
