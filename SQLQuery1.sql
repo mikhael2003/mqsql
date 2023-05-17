@@ -297,3 +297,46 @@ select from
 
 order by streaming_view desc
 
+_________________________________________________________________________________________________________________________________________________
+
+use dbpegawai
+select * from tbkaryawan
+
+create proc coba1
+as
+begin
+if(exists(select * from tbkaryawan))
+begin
+select nip, nama, 
+iif(kd_jenis='L', 'Laki-laki', 'Perempuan') as jenis_kelamin,
+year(getdate())-year(tgl_lahir) as umur
+from tbkaryawan
+end
+else
+begin
+print 'file tidak ada!'
+end
+end
+go
+
+exec coba1
+
+
+create proc isian  @np varchar(5), @nm varchar(20),@tgl date, @gj int , @kdj char(1)
+as
+begin
+if(exists(select * from tbkaryawan where nip=@np))
+begin
+print 'data sdh ada'
+end
+else
+begin
+insert into tbkaryawan values(@np,@nm,@tgl,@gj,@kdj)
+print 'data berhasil masuk'
+end
+end 
+go
+
+exec isian '20192','Yuhana','12/09/1990',5000000,'p'
+
+
