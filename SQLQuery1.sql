@@ -339,4 +339,61 @@ go
 
 exec isian '20192','Yuhana','12/09/1990',5000000,'p'
 
+___________________________________________________________________________________________________________________________________________________
 
+create database dbapotik
+
+use dbapotik
+
+create table tbpegawai(id_pegawai varchar(5) primary key, nama varchar(20), alamat varchar(20), notelp varchar(15), gaji int)
+
+create table tbobat(id_obat varchar(5) primary key, nama_obat varchar(20), kategori varchar(20), ket varchar(20), harga_obat int, stok_obat int)
+
+create table tbpelanggan(id_plg varchar(5) primary key, nama_plg varchar(20), alamat varchar(20), jk char(1), pekerjaan varchar(25))
+
+create table tbtrans(id_tarans varchar(5), id_pegawai varchar(5) foreign key references tbpegawai(id_pegawai), id_obat varchar(5) foreign key references tbobat(id_obat),jumlah int, ttl int)
+
+create proc masuk @idp varchar(5),@nm varchar(20), @alm varchar(20), @telp varchar(15), @gj int
+as
+begin
+if(exists(select id_pegawai from tbpegawai where id_pegawai=@idp))
+begin
+print 'Data Sudah Ada'
+end
+else
+begin
+insert into tbpegawai values (@idp,@nm,@alm,@telp,@gj)
+end
+end
+go
+
+exec masuk 'A0001', 'Yohana S', 'sekip', '0711423441',3000000
+exec masuk 'A0002', 'Panji S', 'plaju', '081377550441',27000000
+exec masuk 'A0003', 'Bagus W', 'Perumnas', '21319273123',3500000
+
+select * from tbpegawai
+
+create proc masukobat @idob varchar(5),@nmobat varchar(20), @kat varchar(20), @ket varchar(15), @hrg int,@stok int
+as
+begin
+if(exists(select id_obat from tbobat where id_obat=@idob))
+begin
+print 'Data Sudah Ada'
+end
+else
+begin
+insert into tbobat values (@idob,@nmobat,@kat,@ket,@hrg,@stok)
+end
+end
+go
+
+exec masukobat 'OB122', 'Aspirin', 'tanpa Resep', 'Obat Nyeri', 2500,30
+exec masukobat 'OB123', 'paracetamol', 'tanpa Resep', 'Obat Demam', 4500,20
+
+alter table tbtrans add id_plg varchar(5) foreign key references tbpelanggan(id_plg)
+
+insert into tbpelanggan values('P0001','Udin','mars','L','makan')
+
+insert into tbtrans values('T0001', 'A0001', 'OB122', 1, 2, 'P0001')
+
+select * from  tbtrans
