@@ -397,3 +397,39 @@ insert into tbpelanggan values('P0001','Udin','mars','L','makan')
 insert into tbtrans values('T0001', 'A0001', 'OB122', 1, 2, 'P0001')
 
 select * from  tbtrans
+
+__________________________________________________________________________________________________________________________________
+
+use elektro
+
+select * from tblbarang
+
+select * from tbljualan
+
+select * from tblkasir
+
+insert into tbljualan values('V0192', '12/05/2023', 'M1200', '001', 5)
+insert into tbljualan values('V0193', '10/05/2023','M1201', '002', 2)
+
+create proc masukjualan @nofax varchar(6), @tgl date, @kdb varchar(5), @kdk char(3), @jml int
+as
+begin
+declare @st int
+declare @sisa int
+if(exists(select * from tbljualan))
+begin
+set @st=(select stok from tblbarang where kdbrg=@kdb)
+if (@jml>=@st)
+begin
+print 'Stok tidak cukup!'
+end
+else
+begin insert into tbljualan values(@nofax,@tgl,@kdb,@kdk,@jml)
+update tblbarang set stok=@sisa where kdbrg=@kdb
+print 'Data sdh masuk!'
+end
+end 
+end
+go
+
+exec masukjualan 'VO187','2023-05-20', 'M1200', '002',2;
