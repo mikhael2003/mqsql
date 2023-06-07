@@ -432,4 +432,85 @@ end
 end
 go
 
+___________________________________________________________________________________________________________________________
+create database dbusaha
+
+use dbusaha
+
+create table tbldivisi (kode_divisi char(1) primary key, nama_divisi varchar(20))
+
+create table tblgaji (gol char(1) primary key, gaji_pokok int)
+
+create table tblstatus (kode_status char(1) primary key, nama_status varchar(20))
+
+
+create table tblkaryawan 
+(nip char(6),nama_kar varchar(25), tmpt_lahir varchar(25), 
+tgl_lahir date, jk char (1), kode_status char(1) foreign key references tblstatus(kode_status),
+alamat varchar(30),kota varchar(25),no_telp varchar(12),kode_divisi char(1) foreign key references tbldivisi(kode_divisi),
+gol char(1) foreign key references tblgaji(gol),jml_anak int NULL)
+
+alter table tblkaryawan alter column nip char(7)
+
+-------------MASUKKAN DATA PADA TABEL GAJI--------------
+insert into tblgaji values ('A' , 750000)
+insert into tblgaji values ('B' , 1000000)
+insert into tblgaji values ('C' , 1250000)
+insert into tblgaji values ('D' , 1500000)
+insert into tblgaji values ('E' , 1750000)
+insert into tblgaji values ('F' , 2000000)
+insert into tblgaji values ('G' , 2250000)
+insert into tblgaji values ('H' , 2500000)
+insert into tblgaji values ('I' , 2750000)
+insert into tblgaji values ('J' , 3000000)
+
+select * from tblgaji
+
+------------MASUKKAN DATA PADA TABEL DIVISI-------------
+insert into tbldivisi values ('A' , 'Direktur')
+insert into tbldivisi values ('B' , 'Manajer')
+insert into tbldivisi values ('C' , 'Personalia')
+insert into tbldivisi values ('D' , 'Marketing')
+insert into tbldivisi values ('E' , 'Produksi')
+insert into tbldivisi values ('F' , 'Warehouse')
+insert into tbldivisi values ('G' , 'Finance')
+insert into tbldivisi values ('H' , 'Accounting')
+insert into tbldivisi values ('I' , 'Umum')
+insert into tbldivisi values ('J' , 'Sales')
+
+select * from tbldivisi
+
+-----------MASUKAN DATA PADA TABEL STATUS---------------
+insert into tblstatus values('1','Tidak')
+insert into tblstatus values('2','Kawin')
+insert into tblstatus values('3','Duda')
+insert into tblstatus values('4','Janda')
+
+select * from tblstatus
+
+-----------MASUKAN DATA PADA TABEL KARYAWAN---------------
+select * from tblkaryawan
+
+insert into tblkaryawan values ('0101001','DEWI','JAKARTA','05/23/1977','P','2','JL.RAYA BOGOR ','BOGOR','085616108762','H','C','2')
+insert into tblkaryawan values ('0101002','ASTRI','TANGERANG','02/12/1980','P','1','JL.RAYA SENANG ','TANGERANG','085618108766','E','B','1')
+insert into tblkaryawan values ('0102001','ACHMAD','BANDUNG','12/12/1988','L','2','JL.RAYA DAGO ','JAKARTA','085161109762','B','I','1')
+insert into tblkaryawan values ('0201003','UDIN','BOGOR','10/09/1985','L','1','JL.RAYA PAMULANG 2 ','TANGERANG','085461108762','G','E','1')
+insert into tblkaryawan values ('0311021','FITRI','SUKABUMI','10/15/1979','P','2','JL.RAYA SUKABUMI ','SUKABUMI','085616190872','J','D','1')
+
+
+--- SOAL 5 ---
+create view view1 as select * from tblKaryawan where gol in (select gol from tblgaji where gaji_pokok>1500000)
+
+--- SOAL 6 ---
+create view view2 as select * from tblKaryawan where (YEAR(getdate())-YEAR(tgl_lahir))>=43 AND kode_status in (select kode_status from tblstatus where nama_status='Tidak')
+
+--- SOAL 7 ---
+alter table tblkaryawan add potongan int
+update tblkaryawan set potongan=0.02*(select gaji_pokok from tblgaji where tblgaji.gol=tblkaryawan.gol)
+
+--- SOAL 8 ---
+select COUNT(nip) from tblkaryawan where jk='L' and kode_status in (select kode_status from tblstatus where nama_status='Tidak')
+
+-- SOAL 9 --
+
 exec masukjualan 'VO187','2023-05-20', 'M1200', '002',2;
